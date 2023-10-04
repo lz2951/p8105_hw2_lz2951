@@ -47,3 +47,32 @@ pols_month =
   select(-party, -day)
 ```
 
+## Clean the data in snp.csv
+
+```{r}
+snp = 
+  read_csv(file = "./data/snp.csv", col_types = cols(date = col_date(format = "%m/%d/%y"))) |>
+  janitor::clean_names() |>
+  separate(date, into = c("year", "month", "day"), sep = "-", convert = TRUE) |>
+  mutate(year = if_else(year > 2023, year - 100, year)) |>
+  arrange(year, month) |>
+  mutate(
+    month = case_match(
+      month,
+      1 ~ "January",
+      2 ~ "February",
+      3 ~ "March",
+      4 ~ "April",
+      5 ~ "May",
+      6 ~ "June",
+      7 ~ "July",
+      8 ~ "August",
+      9 ~ "September",
+      10 ~ "October",
+      11 ~ "November",
+      12 ~ "December"
+    )
+  ) |>
+  select(year, month, everything())
+```
+
