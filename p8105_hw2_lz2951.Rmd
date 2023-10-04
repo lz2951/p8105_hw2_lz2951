@@ -1,0 +1,6 @@
+---
+title: "p8105_hw2_lz2951"
+author: "lz2951"
+date: "2023-10-04"
+output: github_document
+---
