@@ -73,6 +73,45 @@ snp =
       12 ~ "December"
     )
   ) |>
-  select(year, month, everything())
+  select(year, month, close)
 ```
+
+## Clean the unemployment data
+
+```{r}
+unemployment =
+  read_csv(file = "./data/unemployment.csv") |>
+  janitor::clean_names() |>
+  pivot_longer(
+    jan:dec,
+    names_to = "month",
+    values_to = "unemployment"
+  ) |>
+  mutate(
+    month = case_match(
+      month,
+      "jan" ~ "January",
+      "feb" ~ "February",
+      "mar" ~ "March",
+      "apr" ~ "April",
+      "may" ~ "May",
+      "jun" ~ "June",
+      "jul" ~ "July",
+      "aug" ~ "August",
+      "sep" ~ "September",
+      "oct" ~ "October",
+      "nov" ~ "November",
+      "dec" ~ "December"
+    )
+  )
+```
+
+## Merge three datasets
+
+```{r}
+complete_df =
+  left_join(pols_month, snp, join_by("year", "month")) |>
+  left_join(unemployment, join_by("year", "month"))
+```
+
 
