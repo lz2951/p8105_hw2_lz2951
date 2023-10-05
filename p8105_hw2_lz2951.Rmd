@@ -193,6 +193,7 @@ GwyTrashWheel = select(GwyTrashWheel, all_of(shared_variables))
 TrashWheels = bind_rows(MrTrashWheel, ProfTrashWheel, GwyTrashWheel)
 ```
 
+
 # Problem 3
 
 ## Import, clean, and tidy the dataset of baseline demographics
@@ -236,6 +237,6 @@ mci_amyloid =
 ## Combine two datasets
 
 ```{r}
-ad_df = left_join(mci_baseline, mci_amyloid, by = join_by(id))
+ad_df = inner_join(mci_baseline, mci_amyloid, by = join_by(id))
 ```
 
