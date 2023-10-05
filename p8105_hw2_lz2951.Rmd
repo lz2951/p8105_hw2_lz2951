@@ -193,6 +193,7 @@ GwyTrashWheel = select(GwyTrashWheel, all_of(shared_variables))
 TrashWheels = bind_rows(MrTrashWheel, ProfTrashWheel, GwyTrashWheel)
 ```
 
+The number of observations in the resulting dataset is `r nrow(TrashWheels)`, key variables consists of `r colnames(TrashWheels)`. The total weight of trash collected by Professor Trash Wheel(in tons) is `r sum(ProfTrashWheel$weight_tons)`. The total number of cigarette butts collected by Gwynnda in July of 2021 is `r sum(GwyTrashWheel[GwyTrashWheel$year == 2021 & GwyTrashWheel$month == "July", ]$cigarette_butts)`
 
 # Problem 3
 
@@ -222,6 +223,8 @@ mci_baseline$age_at_onset = as.numeric(mci_baseline$age_at_onset)
 mci_baseline = filter(mci_baseline, age_at_onset > current_age)
 ```
 
+The number of participants recruited is `r nrow(mci_baseline)`, of these `r nrow(mci_baseline[mci_baseline$age_at_onset!=Inf,])` participants develop MCI. The average baseline age is `r mean(mci_baseline$current_age)`. The proportion of women in the study who are APOE4 carriers is `r nrow(mci_baseline[mci_baseline$apoe4 == "carrier" & mci_baseline$sex == "Female",])/nrow(mci_baseline[mci_baseline$sex == "Female",])`
+
 ## Import, clean, and tidy the dataset of longitudinally observed biomarker values
 
 ```{r}
@@ -234,9 +237,10 @@ mci_amyloid =
   rename(id = "study_id")
 ```
 
-## Combine two datasets
+## Combine two datasets and export
 
 ```{r}
 ad_df = inner_join(mci_baseline, mci_amyloid, by = join_by(id))
+write_csv(ad_df, "./data/data_mci/ad_df.csv")
 ```
 
