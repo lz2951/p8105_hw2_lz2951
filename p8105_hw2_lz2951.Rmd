@@ -237,6 +237,8 @@ mci_amyloid =
   rename(id = "study_id")
 ```
 
+According to the mci_amyloid dataset, some ids did not appear in this dataset, and some amyloid biomarker data are marked as NA.
+
 ## Combine two datasets and export
 
 ```{r}
