@@ -244,3 +244,4 @@ ad_df = inner_join(mci_baseline, mci_amyloid, by = join_by(id))
 write_csv(ad_df, "./data/data_mci/ad_df.csv")
 ```
 
+Ids of participants who appear in only the baseline dataset: `r setdiff(mci_baseline$id, ad_df$id)`, the number of these participants is `r length(setdiff(mci_baseline$id, ad_df$id))`. Ids of participants who appear in only the amyloid dataset: `r setdiff(mci_amyloid$id, ad_df$id)`, the number of these participants is `r length(setdiff(mci_amyloid$id, ad_df$id))`
