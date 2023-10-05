@@ -115,6 +115,8 @@ complete_df =
   left_join(unemployment, join_by("year", "month"))
 ```
 
+The number of rows of resulting dataset is `r nrow(complete_df)`, and the number of columns is `r ncol(complete_df)`. The variables consisting in the resulting dataset are `r colnames(complete_df)`.
+
 # Problem 2
 
 ## Import the data in Mr. Trash Wheel sheet and calculate the homes powered
