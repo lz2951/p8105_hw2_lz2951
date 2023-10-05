@@ -193,4 +193,42 @@ GwyTrashWheel = select(GwyTrashWheel, all_of(shared_variables))
 TrashWheels = bind_rows(MrTrashWheel, ProfTrashWheel, GwyTrashWheel)
 ```
 
+# Problem 3
 
+## Import, clean, and tidy the dataset of baseline demographics
+
+```{r}
+mci_baseline = 
+  read_csv(
+    file = "./data/data_mci/MCI_baseline.csv", 
+    skip = 1
+  ) |>
+  janitor::clean_names() |>
+  mutate(
+    sex = case_match(
+      sex,
+      1 ~ "Male",
+      0 ~ "Female"
+    ),
+    apoe4 = case_match(
+      apoe4,
+      1 ~ "carrier",
+      0 ~ "non-carrier"
+    )
+  )
+mci_baseline$age_at_onset[mci_baseline$age_at_onset == "."] = "Inf"
+mci_baseline$age_at_onset = as.numeric(mci_baseline$age_at_onset)
+mci_baseline = filter(mci_baseline, age_at_onset > current_age)
+```
+
+## Import, clean, and tidy the dataset of longitudinally observed biomarker values
+
+```{r}
+mci_amyloid = 
+  read_csv(
+    file = "./data/data_mci/mci_amyloid.csv", 
+    skip = 1
+  ) |>
+  janitor::clean_names() |>
+  rename(id = "study_id")
+```
