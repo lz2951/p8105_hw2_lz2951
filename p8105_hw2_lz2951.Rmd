@@ -9,6 +9,7 @@ output: github_document
 
 ```{r}
 library(tidyverse)
+library(readxl)
 ```
 
 # Problem 1
@@ -114,4 +115,58 @@ complete_df =
   left_join(unemployment, join_by("year", "month"))
 ```
 
+# Problem 2
+
+## Import the data in Mr. Trash Wheel sheet and calculate the homes powered
+
+```{r}
+MrTrashWheel =
+  read_excel(
+    path = "./data/202309 Trash Wheel Collection Data.xlsx", 
+    sheet = "Mr. Trash Wheel",
+    range = "A2:N586",
+  ) |>
+  janitor::clean_names()
+```
+
+According to the homes powered note, calculate the amount of homes powered:
+Each ton of trash equates to on average 500 kilowatts of electricity.  An average household will use 30 kilowatts per day.
+
+```{r}
+MrTrashWheel = 
+  mutate(
+    MrTrashWheel, 
+    homes_powered = weight_tons*500/30
+  )
+```
+
+## Import the data in Professor Trash Wheel sheet and calculate the homes powered
+
+```{r}
+ProfTrashWheel =
+  read_excel(
+    path = "./data/202309 Trash Wheel Collection Data.xlsx", 
+    sheet = "Professor Trash Wheel",
+    range = "A2:M108",
+  ) |>
+  janitor::clean_names() |>
+  mutate(
+    homes_powered = weight_tons*500/30
+  )
+```
+
+## Import the data in Gwynnda Trash Wheel sheet and calculate the homes powered
+
+```{r}
+GwyTrashWheel =
+  read_excel(
+    path = "./data/202309 Trash Wheel Collection Data.xlsx", 
+    sheet = "Gwynnda Trash Wheel",
+    range = "A2:L157",
+  ) |>
+  janitor::clean_names() |>
+  mutate(
+    homes_powered = weight_tons*500/30
+  )
+```
 
