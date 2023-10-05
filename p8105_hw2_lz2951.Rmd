@@ -232,3 +232,10 @@ mci_amyloid =
   janitor::clean_names() |>
   rename(id = "study_id")
 ```
+
+## Combine two datasets
+
+```{r}
+ad_df = left_join(mci_baseline, mci_amyloid, by = join_by(id))
+```
+
